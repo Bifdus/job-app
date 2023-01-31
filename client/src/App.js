@@ -1,7 +1,10 @@
+import Landing from './pages/Landing';
+
 function App() {
   return (
-    <div className='App'>
-      <h1>React App</h1>
+    <div>
+      <h1>JobHive</h1>
+      <Landing />
     </div>
   );
 }
