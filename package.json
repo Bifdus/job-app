@@ -1,0 +1,24 @@
+{
+  "name": "job-app",
+  "version": "1.0.0",
+  "description": "#### Track Your Job Search",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bifdus/job-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Bifdus/job-app/issues"
+  },
+  "homepage": "https://github.com/Bifdus/job-app#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
