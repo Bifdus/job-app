@@ -4,16 +4,28 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+// db auth user
 import connectDB from './db/connect.js';
+
+// routers
+import authRouter from './routes/authRouter.js';
+
+// Jobs router
+import jobsRouter from './routes/jobsRouter.js';
 
 // Must have .js extension
 import notFoundMiddleWare from './middleware/not-found.js';
 import errorHandlerMiddleware from './middleware/error-handler.js';
 
+app.use(express.json());
+
 app.get('/', (req, res) => {
   throw new Error('');
   res.send('Welcome to Server!');
 });
+
+app.use('/api/v1/auth', authRouter);
+app.use('/api/v1/jobs', jobsRouter);
 
 // Looks for all http methods and routes, if none match, it will call the notFoundMiddleWare
 app.use(notFoundMiddleWare);
