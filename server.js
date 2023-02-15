@@ -8,10 +8,10 @@ dotenv.config();
 import connectDB from './db/connect.js';
 
 // routers
-import authRouter from './routes/authRouter.js';
+import authRouter from './routes/authRoutes.js';
 
 // Jobs router
-import jobsRouter from './routes/jobsRouter.js';
+import jobsRouter from './routes/jobsRoutes.js';
 
 // Must have .js extension
 import notFoundMiddleWare from './middleware/not-found.js';
