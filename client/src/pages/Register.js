@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Logo, FormRow, Alert } from '../components';
 import Wrapper from '../assets/wrappers/RegisterPage';
 import { useAppContext } from '../context/appContext';
+import { useNavigate } from 'react-router-dom';
 
 const initialState = {
   name: '',
@@ -11,22 +12,24 @@ const initialState = {
 };
 
 const Register = () => {
-  const [user, setUser] = useState(initialState);
-
-  const { isLoading, showAlert, displayAlert, clearAlert, registerUser } =
+  const navigate = useNavigate();
+  // Local values
+  const [values, setValues] = useState(initialState);
+  // Global values
+  const { user, isLoading, showAlert, displayAlert, clearAlert, registerUser } =
     useAppContext();
 
   const toggleMember = () => {
-    setUser({ ...user, isMember: !user.isMember });
+    setValues({ ...values, isMember: !values.isMember });
   };
 
   const handleChange = (e) => {
-    setUser({ ...user, [e.target.name]: e.target.value });
+    setValues({ ...values, [e.target.name]: e.target.value });
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
-    const { name, email, password, isMember } = user;
+    const { name, email, password, isMember } = values;
     if (!email || !password || (!isMember && !name)) {
       displayAlert();
       return;
@@ -42,18 +45,29 @@ const Register = () => {
     // console.log(user);
   };
 
+  /* 
+  [user, navigate] in the dependency means that the effect will be invoked 
+  upon initial render and when the user or navigate changes.
+  */
+  useEffect(() => {
+    if (user) {
+      setTimeout(() => {
+        navigate('/');
+      }, 2000);
+    }
+  }, [user, navigate]);
   return (
     <Wrapper className='full-page'>
       <form className='form' onSubmit={onSubmit}>
         <Logo />
-        <h3>{!user.isMember ? 'Login' : 'Register'}</h3>
+        <h3>{!values.isMember ? 'Login' : 'Register'}</h3>
         {showAlert && <Alert />}
         {/* name input */}
-        {!user.isMember && (
+        {!values.isMember && (
           <FormRow
             type='text'
             name='name'
-            value={user.name}
+            value={values.name}
             handleChange={handleChange}
             labelText='Name'
           />
@@ -63,14 +77,14 @@ const Register = () => {
         <FormRow
           type='email'
           name='email'
-          value={user.email}
+          value={values.email}
           handleChange={handleChange}
           labelText='Email'
         />
         <FormRow
           type='password'
           name='password'
-          value={user.password}
+          value={values.password}
           handleChange={handleChange}
           labelText='Password'
         />
@@ -79,9 +93,9 @@ const Register = () => {
         </button>
 
         <p>
-          {user.isMember ? 'Not a member yet?' : 'Already a member?'}
+          {values.isMember ? 'Not a member yet?' : 'Already a member?'}
           <button type='button' onClick={toggleMember} className='member-btn'>
-            {user.isMember ? 'Register' : 'Login'}
+            {values.isMember ? 'Register' : 'Login'}
           </button>
         </p>
       </form>
